@@ -1,16 +1,38 @@
-1: Контейнеризация фронтенда и бэкенда:
+# Демонстрационное приложение для курса Docker-контейнеризация и хранение данных
 
-2: Оптимизация размера образов:
+## 1. Контейнеризация фронтенда и бэкенда
 
-3: Конфигурируемость контейнеров:
+Бекенд и фронтенд собраны в двух вариантах. Первый вариант, представленный в `Dockerfile` и `Dockerfile.dhi` с помощью hardened образов от компании Docker [1].
 
-4: Инфраструктура и устойчивость приложения:
+### Команды для сборки:
 
-5: Масштабируемость и балансировка нагрузки:
+**Базовые образы:**
+- `docker build -f backend/Dockerfile -t docker-project-backend:{version} .`
+- `docker build -f frontend/Dockerfile --build-arg VUE_APP_API_URL=http://localhost:8081 -t docker-project-frontend:{version} .`
 
-6: Основы безопасности контейнеров:
+**DHI образы:**
+- `docker build -f backend/Dockerfile.dhi -t docker-project-backend:{version} .`
+- `docker build -f frontend/Dockerfile.dhi -t docker-project-frontend:{version} .`
 
-7: Управление секретами:
+### Команды для запуска:
+- `docker run -d --name momo-backend -p 8081:8081 docker-project-backend`
+- `docker run -d --name momo-frontend -p 80:80 docker-project-frontend`
 
-8: Безопасность образов:
-    
+## 2. Оптимизация размера образов
+
+## 3. Конфигурируемость контейнеров
+
+## 4. Инфраструктура и устойчивость приложения
+
+## 5. Масштабируемость и балансировка нагрузки
+
+## 6. Основы безопасности контейнеров
+
+## 7. Управление секретами
+
+## 8. Безопасность образов
+
+***
+
+**Список литературы:**
+1. https://www.docker.com/products/hardened-images/

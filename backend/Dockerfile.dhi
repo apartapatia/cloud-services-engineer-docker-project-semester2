@@ -1,7 +1,7 @@
 # =========================================
 # Stage 1: Build
 # =========================================
-FROM golang:1.17-alpine AS builder
+FROM dhi.io/golang:1-alpine3.21-dev AS builder
 
 WORKDIR /app
 
@@ -15,15 +15,11 @@ RUN CGO_ENABLED=0 GOOS=linux go build -o main ./cmd/api
 # =========================================
 # Stage 2: Runtime
 # =========================================
-FROM alpine:3.19
-
-RUN addgroup -S apartgroup && adduser -S apartuser -G apartgroup
+FROM dhi.io/golang:1-alpine3.21
 
 WORKDIR /app
 
-COPY --from=builder --chown=apartuser:apartgroup /app/main .
-
-USER apartuser
+COPY --from=builder /app/main .
 
 EXPOSE 8081
 
