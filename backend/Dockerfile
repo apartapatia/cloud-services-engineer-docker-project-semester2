@@ -15,7 +15,7 @@ RUN CGO_ENABLED=0 GOOS=linux go build -o main ./cmd/api
 # =========================================
 # Stage 2: Runtime
 # =========================================
-FROM alpine:3.19
+FROM alpine:3.21
 
 RUN addgroup -S apartgroup && adduser -S apartuser -G apartgroup
 
