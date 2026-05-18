@@ -19,7 +19,7 @@ vendor/
 *.tgz
 
 # Environment variables and secrets
-*.env*
+.env*
 
 # Node modules
 node_modules/
