@@ -1,5 +1,7 @@
 # Демонстрационное приложение для курса Docker-контейнеризация и хранение данных
 
+[![Security Scan](https://github.com/apartapatia/cloud-services-engineer-docker-project-semester2/actions/workflows/deploy.yaml/badge.svg)](https://github.com/apartapatia/cloud-services-engineer-docker-project-semester2/actions/workflows/deploy.yaml)
+
 ## 1. Контейнеризация фронтенда и бэкенда
 
 Бекенд и фронтенд собраны в двух вариантах. Первый вариант, представленный в `Dockerfile` и `Dockerfile.dhi` с помощью hardened образов от компании Docker [1].
@@ -80,6 +82,8 @@ docker-project-backend    latest    ae66f03c3b84   2 minutes ago    20.3MB
 Секреты передаются с помощью .env файлов.
 
 ## 8. Безопасность образов
+
+В проекте настроено автоматическое сканирование на наличие уязвимостей (Vulnerability Scanning) в CI/CD (GitHub Actions). Для этого используется сканер **Trivy** от AquaSecurity. При каждом push и pull request в ветки `main` и `dev` собираются локальные образы фронтенда и бекенда, после чего Trivy сканирует их на уязвимости ОС и библиотек уровня `CRITICAL` и `HIGH`. Результат пайплайна (пройдено/провалено) отображается в виде бейджа в начале этого документа.
 
 ---
 
