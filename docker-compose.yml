@@ -4,32 +4,44 @@ services:
       context: ./backend
       dockerfile: Dockerfile
     image: docker-project-backend:${VERSION:-latest}
-    container_name: momo-backend
-    ports:
-      - "${BACKEND_PORT:-8081}:8081"
     healthcheck:
-      test: ["CMD", "wget", "--no-verbose", "--spider", "http://localhost:8081/health"]
+      test: ["CMD", "wget", "--no-verbose", "--spider", "http://127.0.0.1:8081/health"]
       interval: 30s
       timeout: 5s
       retries: 3
       start_period: 10s
     restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 128M
 
   momo-frontend:
     build:
       context: ./frontend
       dockerfile: Dockerfile
     image: docker-project-frontend:${VERSION:-latest}
-    container_name: momo-frontend
     depends_on:
       momo-backend:
         condition: service_healthy
-    ports:
-      - "${FRONTEND_PORT:-80}:8080"
     healthcheck:
-      test: ["CMD", "wget", "-4", "--no-verbose", "--spider", "http://localhost:8080/"]
+      test: ["CMD", "wget", "--no-verbose", "--spider", "http://127.0.0.1:8080/"]
       interval: 30s
       timeout: 5s
       retries: 3
       start_period: 10s
+    restart: unless-stopped
+
+  haproxy:
+    image: haproxy:2.9
+    ports:
+      - "${FRONTEND_PORT:-80}:80"
+    volumes:
+      - ./haproxy/haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg:ro
+    depends_on:
+      momo-frontend:
+        condition: service_healthy
+      momo-backend:
+        condition: service_healthy
     restart: unless-stopped

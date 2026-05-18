@@ -28,6 +28,6 @@ USER apartuser
 EXPOSE 8081
 
 HEALTHCHECK --interval=30s --timeout=5s --start-period=5s --retries=3 \
-  CMD wget --no-verbose --spider http://localhost:8081/health || exit 1
+  CMD wget --no-verbose --spider http://127.0.0.1:8081/health || exit 1
 
 ENTRYPOINT ["./main"]
