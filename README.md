@@ -7,19 +7,23 @@
 ### Команды для сборки:
 
 **Базовые образы:**
+
 - `docker build -f backend/Dockerfile -t docker-project-backend:{version} backend/`
 - `docker build -f frontend/Dockerfile -t docker-project-frontend:{version} frontend/`
 
 **DHI образы:**
+
 - `docker build -f backend/Dockerfile.dhi -t docker-project-backend:{version} backend/`
 - `docker build -f frontend/Dockerfile.dhi -t docker-project-frontend:{version} frontend/`
 
 ### Команды для запуска через cli:
 
 **Создание сети:**
+
 - `docker network create momo-network`
 
 **Запуск контейнеров:**
+
 - `docker run -d --name momo-backend --network momo-network -p 8081:8081 docker-project-backend:{version}`
 - `docker run -d --name momo-frontend --network momo-network -p 80:8080 docker-project-frontend:{version}`
 
@@ -33,6 +37,7 @@
 Для оптимизации образов были созданы dockerignore файлы, которые не позволяют попасть лишней информации в готовый образ. Также каждый докерфайл собираться с помощью multi stage build, с оптимизацией кеша для фронта и последовательным запуском RUN команд в одном слое.
 
 **Итоговые размеры образов:**
+
 ```
 REPOSITORY                TAG       IMAGE ID       CREATED          SIZE
 docker-project-frontend   latest    ace76e423b17   53 seconds ago   50MB
@@ -55,20 +60,18 @@ docker-project-backend    latest    ae66f03c3b84   2 minutes ago    20.3MB
 
 Для теста поднял 7 реплик бекенда и 3 фронта, с помощью хапрокси и curl запросов были сняты метрики балансировки.
 
-| Пул | Имя сервера в HAProxy | Обработано запросов |
-| :--- | :--- | :---: | :---: |
-| **frontend_servers** | frontend 1 | 34 |
-| | frontend 1 | UP | 69 |
-| | frontend 2 | UP | 69 |
-| | frontend 3 | UP | 68 |
-| **backend_servers** | backend 1 | 34 |
-| | backend 1 | UP | 49 |
-| | backend 2 | UP | 48 |
-| | backend 3 | UP | 48 |
-| | backend 4 | UP | 15 |
-| | backend 5 | UP | 15 |
-| | backend 6 | UP | 14 |
-| | backend 7 | UP | 14 |
+| Пул                  | Имя сервера в HAProxy | Обработано запросов |
+| :------------------- | :-------------------- | :-----------------: |
+| **frontend_servers** | frontend 1            |         69          |
+|                      | frontend 2            |         69          |
+|                      | frontend 3            |         68          |
+| **backend_servers**  | backend 1             |         49          |
+|                      | backend 2             |         48          |
+|                      | backend 3             |         48          |
+|                      | backend 4             |         15          |
+|                      | backend 5             |         15          |
+|                      | backend 6             |         14          |
+|                      | backend 7             |         14          |
 
 ## 6. Основы безопасности контейнеров
 
@@ -78,7 +81,8 @@ docker-project-backend    latest    ae66f03c3b84   2 minutes ago    20.3MB
 
 ## 8. Безопасность образов
 
-***
+---
 
 **Список литературы:**
+
 1. https://www.docker.com/products/hardened-images/
